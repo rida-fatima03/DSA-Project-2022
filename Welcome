@@ -1,0 +1,33 @@
+#############WELCOME#########################
+header = Label(welcomeframe, text="WELCOME TO", fg="black",
+                font=("Times New Roman",32,"bold"),
+                background="lightblue")
+header.place(x=510, y=180)
+name = Label(welcomeframe, text="BAKE O\'CLOCK", fg="red",
+                font=("Times New Roman",52, "bold"),
+                background="lightblue",relief="groove")
+name.place(x=390,y=250)
+motto = Label(welcomeframe, text="WE SERVE YOU", fg="black",
+                font=("Times New Roman",12,"italic"),
+                background="lightblue")
+motto.place(x=610,y=350)
+
+
+img = Image.open('./images/logo.png')
+
+
+canvas= Canvas(welcomeframe, width= 100, height= 100,bg="lightblue")
+canvas.place(x=620, y=50)
+
+resized_image= img.resize((90,100), Image.ANTIALIAS)
+new_image= ImageTk.PhotoImage(resized_image)
+canvas.create_image(10,10, anchor=NW ,image=new_image)
+def login():
+    import login
+
+def signup():
+    import signup
+loginbtn = Button(welcomeframe, text="Sign In", font = ("Arial",12), fg="lightblue",command=lambda: login(),height=1,width=7,bg="blue", relief=RIDGE,cursor="hand2")
+loginbtn.place(x=630,y=400)
+signupbtn = Button(welcomeframe, text="Sign Up", fg="lightblue",command=lambda: signup(),font = ("Arial",12),height=1,width=7,bg="blue", relief=RIDGE,cursor="hand2")
+signupbtn.place(x=630,y=450)
