@@ -1,0 +1,19 @@
+from math import inf
+def dijkstras(graph, root):
+    n = len(graph)
+    dist = [inf for _ in range(n)]
+    dist[root] = 0
+    visited = [False for _ in range(n)]
+    for _ in range(n):
+        u = -1
+        for i in range(n):
+            if not visited[i] and (u == -1 or dist[i] < dist[u]):
+                u = i
+        if dist[u] == inf:
+            break
+        visited[u] = True
+        for v, l in graph[u]:
+            if dist[u] + l < dist[v]:
+                dist[v] = dist[u] + l
+    return dist
+print(dijkstras(graph, 3))
