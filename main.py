@@ -1,35 +1,42 @@
+#Tkinter is a Python interface for the Tk GUI toolkit.
+#The tkinter package ("Tk interface") comprises the Python standard interface to the Tcl/Tk GUI toolkit.
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+#The tkinter.ttk module allows users to access the Tk themed widget collection.
 from tkinter import ttk
+#askyesno is a function that displays a dialogue asking for user confirmation. There will be a title, a message, and two buttons in the dialogue (yes and no). 
+#The function returns True when you click the Yes button.
 from tkinter.messagebox import askyesno
 from PIL import ImageTk, Image
 import csv
+#scrolledtext is a Python package that provides a text widget as well as a scroll bar.
 from tkinter.scrolledtext import ScrolledText
 import random
 
-ws = Tk()
-ws.title('Bake O\'Clock')
-ws.geometry('1350x700+0+0')
-ws.config(bg='lightblue')
+window = Tk()
+window.title('Bake O\'Clock')
+window.geometry('1350x700+0+0')
+window.config(bg='lightblue')
 
-welcomeframe = Frame(ws, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
-loginframe = Frame(ws, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
-signupframe = Frame(ws, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
-menuframe = Frame(ws, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
-cartframe = Frame(ws, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
-billframe = Frame(ws, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
+welcomeframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
+loginframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
+signupframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
+menuframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
+cartframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
+billframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
 #title for welcome page
 header = Label(welcomeframe, text="WELCOME TO", fg="black",
                 font=("Times New Roman",32,"bold"),
                 background="lightblue")
-header.place(x=510, y=180) #placing title
-#name of bakery
+#title placement
+header.place(x=510, y=180)
+#The next few lines of code are for stating the bakery's name.
 name = Label(welcomeframe, text="BAKE O\'CLOCK", fg="red",
                 font=("Times New Roman",52, "bold"),
                 background="lightblue",relief="groove")
 name.place(x=390,y=250) #placing name
-#slogan/motto
+#The next few lines of code are for mentioning the bakery's primary motto.
 motto = Label(welcomeframe, text="WE SERVE YOU", fg="black",
                 font=("Times New Roman",12,"italic"),
                 background="lightblue")
@@ -41,10 +48,10 @@ img = Image.open('./images/logo.png')
 #canvas for logo
 canvas= Canvas(welcomeframe, width= 100, height= 100,bg="lightblue")
 canvas.place(x=620, y=50)
-#resizing image
+#The next few lines of code are for image scaling.
 resized_image= img.resize((90,100), Image.ANTIALIAS)
 new_image= ImageTk.PhotoImage(resized_image)
-#placing image on canvas
+#The next lines of code are for displaying an image on canvas.
 canvas.create_image(10,10, anchor=NW ,image=new_image)
 def login():
     import login
@@ -68,7 +75,7 @@ canvas.grid(sticky="news")
 resized_image= img.resize((70,70), Image.ANTIALIAS)
 new_image= ImageTk.PhotoImage(resized_image)
 
-#Add image to the Canvas Items
+#Insert an image into the Canvas Items
 canvas.create_image(10,10, anchor=NW ,image=new_image)
 title = Label(loginframe, text="BAKE O'CLOCK", fg="red",font=("Arial",12,'bold'),bg="lightblue")
 title.place(x=20,y=100)
@@ -89,21 +96,21 @@ for i in details:
     usernames.append(i[2])
     passwords.append(i[4])
 def signin():
-    uname = email.get()
-    upwd = pasw.get()
+    username = email.get()
+    password = pasw.get()
     check_counter=0
-    if uname == "":
+    if username == "":
         warn = "Username can't be empty"
     else:
         check_counter += 1
-    if upwd == "":
+    if password == "":
         warn = "Password can't be empty"
     else:
         check_counter += 1
     if check_counter == 2:
-        if uname in usernames:
-            ind = usernames.index(uname)
-            if upwd==passwords[ind]:
+        if username in usernames:
+            ind = usernames.index(username)
+            if password==passwords[ind]:
                 messagebox.showinfo('Login Status', 'Logged in Successfully!')
             else:
                 messagebox.showerror('Login Status', 'invalid password')
@@ -169,7 +176,7 @@ canvas.place(x=50, y=10)
 resized_image= img.resize((50,50), Image.ANTIALIAS)
 new_image= ImageTk.PhotoImage(resized_image)
 
-#Add image to the Canvas Items
+#Insert an image into the Canvas Items
 canvas.create_image(10,10, anchor=NW ,image=new_image)
 title = Label(signupframe, text="BAKE O'CLOCK", fg="red",font=("Arial",10,'bold'),bg="lightblue")
 title.place(x=32,y=80)
@@ -248,10 +255,7 @@ register_address = Entry(
     )
 
 
-#register_country = OptionMenu(
-#    right_frame, 
-#    variable, 
-#    *countries)
+
 """
 register_country.config(
     width=15, 
@@ -341,7 +345,7 @@ canvas.place(x=50, y=10)
 resized_image= img.resize((50,50), Image.ANTIALIAS)
 new_image= ImageTk.PhotoImage(resized_image)
 
-#Add image to the Canvas Items
+#Insert an image into the Canvas Items
 canvas.create_image(10,10, anchor=NW ,image=new_image)
 title = Label(menuframe, text="BAKE O'CLOCK", fg="red",font=("Arial",10,'bold'),bg="lightblue")
 title.place(x=32,y=80)
@@ -403,7 +407,7 @@ for i in menu["BROWNIES"]:
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
     i[2]=var.get()
-# disable the widget so users can't insert text into it
+# Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
 cup = Image.open('./images/cupcake.png')
@@ -426,7 +430,7 @@ for i in menu["CUPCAKES"]:
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
     i[2]=var.get()
-# disable the widget so users can't insert text into it
+# Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
 coo = Image.open('./images/cookies.png')
@@ -450,7 +454,7 @@ for i in menu["COOKIES"]:
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
     i[2]=var.get()
-# disable the widget so users can't insert text into it
+# Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
 sav = Image.open('./images/pastry.png')
@@ -474,7 +478,7 @@ for i in menu["SAVOURIES"]:
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
     i[2]=var.get()
-# disable the widget so users can't insert text into it
+# Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
 brd = Image.open('./images/bread.png')
@@ -497,7 +501,7 @@ for i in menu["BREADS"]:
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
     i[2]=var.get()
-# disable the widget so users can't insert text into it
+# Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 def checkout():
     bill = []
@@ -527,4 +531,4 @@ for i in bill:
     
 checkout.place(x=1140, y=40)
 menuframe.place(x=25,y=25)
-ws.mainloop()
+window.mainloop()
