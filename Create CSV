@@ -9,10 +9,10 @@ data = [
     ['Pakistan', "Abdullah Zafar", 'AZ.gmail.com', 'AND'],
     ['India', "Anne Omaha", 'AO.gmail.com', 'AGO']
 ]
-#open file
+#open the file
 with open("/Users/muminahkhurram/downloads/CSV_bakery.csv", 'w', encoding='UTF8', newline='') as f:
     writer = csv.writer(f)
-    #write  header
+   #create header
     writer.writerow(header)
-    #write rows
+   #create rows
     writer.writerows(data)
