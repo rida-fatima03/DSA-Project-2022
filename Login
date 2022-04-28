@@ -1,14 +1,10 @@
 img = Image.open('./images/logo.png')
-
-
-
-
 canvas= Canvas(loginframe, width= 65, height= 65,bg="lightblue")
 canvas.place(x=50, y=10)
 resized_image= img.resize((50,50), Image.ANTIALIAS)
 new_image= ImageTk.PhotoImage(resized_image)
 
-#Add image to the Canvas Items
+#Insert an image into the Canvas Items
 canvas.create_image(10,10, anchor=NW ,image=new_image)
 title = Label(loginframe, text="BAKE O'CLOCK", fg="red",font=("Arial",10,'bold'),bg="lightblue")
 title.place(x=32,y=80)
@@ -21,7 +17,7 @@ details = []
 
 for row in csvreader:
     details.append(row)
-
+#create list for usernames and passwords
 usernames = []
 passwords = []
 
@@ -29,21 +25,21 @@ for i in details:
     usernames.append(i[2])
     passwords.append(i[4])
 def signin():
-    uname = email.get()
-    upwd = pasw.get()
+    username = email.get()
+    password = pasw.get()
     check_counter=0
-    if uname == "":
+    if username == "":
         warn = "Username can't be empty"
     else:
         check_counter += 1
-    if upwd == "":
+    if password == "":
         warn = "Password can't be empty"
     else:
         check_counter += 1
     if check_counter == 2:
-        if uname in usernames:
-            ind = usernames.index(uname)
-            if upwd==passwords[ind]:
+        if username in usernames:
+            ind = usernames.index(username)
+            if password==passwords[ind]:
                 messagebox.showinfo('Login Status', 'Logged in Successfully!')
             else:
                 messagebox.showerror('Login Status', 'invalid password')
