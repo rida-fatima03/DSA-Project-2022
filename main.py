@@ -26,6 +26,7 @@ import csv
 from tkinter.scrolledtext import ScrolledText
 
 import random
+import math
 
 #creating tkinter window
 window = Tk()
@@ -62,6 +63,7 @@ cartframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=R
 #final bill page frame
 billframe = Frame(window, height = 650, width = 1300, bg = "lightblue", relief=RIDGE, bd=5)
 
+#############WELCOME################
 
 #header for welcome page
 header = Label(welcomeframe, text="WELCOME TO", fg="black",
@@ -404,8 +406,6 @@ def insert():
     else:
         messagebox.showerror('Error', warn)
 
-def regi():
-    loginframe.place(x=25,y=25)
 register_btn = Button(
     signup, 
     width=15, 
@@ -466,13 +466,14 @@ text.insert("end", "\n")
 
 for i in menu["CAKES"]:
     var = IntVar()
-    var.set(0)
+    
     
     checkbutton = Checkbutton(text, text=i[0]+"\tRs. "+i[1], variable=var,cursor="arrow",
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    i[2]=var.get()
+    if var.get()>0:
+        i[2]=1
 text['state']='disabled'
 
 br = Image.open('./images/brownie.png')
@@ -488,13 +489,14 @@ text.insert("end", "\n")
 
 for i in menu["BROWNIES"]:
     var = IntVar()
-    var.set(0)
+    
     
     checkbutton = Checkbutton(text, text=i[0]+"\tRs. "+i[1], variable=var,cursor="arrow",
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    i[2]=var.get()
+    if var.get()>0:
+        i[2]=1
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -511,13 +513,13 @@ text.insert("end", "\n")
 
 for i in menu["CUPCAKES"]:
     var = IntVar()
-    var.set(0)
     
     checkbutton = Checkbutton(text, text=i[0]+"\tRs. "+i[1], variable=var,cursor="arrow",
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    i[2]=var.get()
+    if var.get()>0:
+        i[2]=1
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -534,14 +536,14 @@ text.insert("end", "\n")
 
 for i in menu["COOKIES"]:
     var = IntVar()
-    var.set(0)
-    
+   
     checkbutton = Checkbutton(text, text=i[0]+"\tRs. "+i[1],
                               variable=var,cursor="arrow",bg='pink', fg='black',
                               height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    i[2]=var.get()
+    if var.get()>0:
+        i[2]=1
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -558,14 +560,14 @@ text.insert("end", "\n")
 
 for i in menu["SAVOURIES"]:
     var = IntVar()
-    var.set(0)
     
     checkbutton = Checkbutton(text, text=i[0]+"\tRs. "+i[1],
                               variable=var,cursor="arrow",bg='pink', fg='black',
                               height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    i[2]=var.get()
+    if var.get()>0:
+        i[2]=1
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -582,13 +584,14 @@ text.insert("end", "\n")
 
 for i in menu["BREADS"]:
     var = IntVar()
-    var.set(0)
+   
     
     checkbutton = Checkbutton(text, text=i[0]+"\tRs. "+i[1], variable=var,cursor="arrow",
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    i[2]=var.get()
+    if var.get()>0:
+        i[2]=1
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 bill=[]
@@ -596,62 +599,36 @@ def checkout1():
     print("inside checkout function")
     for i in menu.keys():
         for j in menu[i]:
-            if j[2]>0:
-                temp = [j[0],j[1],j[2], int(j[1]*int(j[2]))]
+            if int(j[2])>0:
+                temp = [j[0],j[1],j[2],j[1]]
                 bill.append(temp)
     
 def x():
     print("inside checkout function")
 
-checkout = Button(menuframe, text="CHECKOUT", font = ("Arial",12, "bold"),fg="pink",height=2,width=10,bg="red",relief=RIDGE,cursor="hand2",command=lambda: [checkout1(),cartframe.place(x=25,y=25)])
+checkout = Button(menuframe, text="PLACE ORDER", font = ("Arial",12, "bold"),fg="pink",height=2,width=10,bg="red",relief=RIDGE,cursor="hand2",command=lambda: [checkout1(),billframe.place(x=25,y=25)])
 #[checkout(bill),cartframe.place(x=25,y=25)]
 #menuframe.place(x=25,y=25)
 
-title= Label(cartframe, text="CHECKOUT", fg="black",font=("Times",32,'bold'),bg="lightblue")
+title= Label(billframe, text="WE HAVE RECEIVED YOUR ORDER!", fg="black",font=("Times",22,'bold'),bg="lightblue")
 title.place(x=520,y=30) 
 
-text = ScrolledText(cartframe, width=42, height=20)
-text.place(x=470,y=150)
-for i in bill:
-    lbl = Label(text, text=str(i[0])+"\t"+str(i[1])+"\t"+str(i[2])+"\t"+str(i[3]))
-    text.window_create("end", window=lbl)
-    text.insert("end", "\n")
-mode = ""
-var = IntVar()
-var.set(0)
-def modes(mode):
-    if var.get()==1:
-        mode = "Delivery"
-    else:
-        mode = "Pick-up"
 
-lbl = Label(cartframe, text="Choose an option:", fg="black",font=("Times",12,'bold'),bg="lightblue")
-lbl.place(x=500,y=500)
-R1 = Radiobutton(cartframe, text="Delivery", variable=var, value=1,
-                  command=modes(mode))
-R1.place(x=500,y=550)
 
-R2 = Radiobutton(cartframe, text="Pick-up", variable=var, value=2,
-                  command=modes(mode))
-R2.place(x=600,y=550)    
 checkout.place(x=1140, y=40)
 img5 = Image.open('./images/logo.png')
 
-canvas5= Canvas(cartframe, width= 65, height= 65,bg="lightblue")
+canvas5= Canvas(billframe, width= 65, height= 65,bg="lightblue")
 canvas5.place(x=50, y=10)
 resized_image5= img5.resize((50,50), Image.ANTIALIAS)
 new_image5= ImageTk.PhotoImage(resized_image5)
 
 #Insert an image into the Canvas Items
 canvas5.create_image(10,10, anchor=NW ,image=new_image4)
-title5 = Label(cartframe, text="BAKE O'CLOCK", fg="red",font=("Arial",10,'bold'),bg="lightblue")
+title5 = Label(billframe, text="BAKE O'CLOCK", fg="red",font=("Arial",10,'bold'),bg="lightblue")
 title5.place(x=32,y=80)
 
-def placeorder():
-    if var.get(0):
-        messagebox.showerror('option', 'please choose an option!!!')
-    else:
-        messagebox.showinfo('Order Status', 'Order Placed Successfully!')
+
 from math import inf
 nodes = [ 'AIRPORT', 'ANCHOLI', 'CHAMAN IQBAL COLONY', 'DALMIA','GULISTAN E JAUHAR', 'GULSHAN E IQBAL', 'MODEL COLONY','MALIR CANT', 'SHAH FAISAL TOWN', 'KARSAZ']
 edges=[ ("GULISTAN E JAUHAR", "AIRPORT", 7),( 'GULISTAN E JAUHAR', 'ANCHOLI',15),('GULISTAN E JAUHAR', 'CHAMAN IQBAL COLONY',5.4),
@@ -723,31 +700,28 @@ def getShortestPath (graph,initial,final):
     a=path[final]
    
     return a
-def calcdel(mode):
-    fee = 0
-    
-    if mode=="Delivery":
+def calcdel():
+   
         con = sqlite3.connect('userdata.db')
         c = con.cursor()
         for row in c.execute("Select * from record"):
             are = row[4]
-        dis = getShortestPath (graph,"GULISTAN E JAUHAR",are)
+        dis = getShortestPath (G,"GULISTAN E JAUHAR",are)
         if dis>0 and dis<=10:
             fee = 50
         elif dis>10 and dis<=20:
             fee = 100
         elif dis>20:
             fee = 150
-    return fee
-title= Label(billframe, text="CHECKOUT", fg="black",font=("Times",32,'bold'),bg="lightblue")
-title.place(x=520,y=30) 
+        return fee
+
 
 text = ScrolledText(billframe, width=42, height=20)
 text.place(x=470,y=150)
 text.insert("end", "\n")
 num = random.randint(2763718,9485198908)
 text.insert("end", f"Bill Number:{num}\n")
-fee = calcdel(mode)
+fee = calcdel()
 total = 0
 for i in bill:
     total+=int(i[3])
@@ -758,9 +732,10 @@ for i in bill:
     lbl = Label(text, text=str(i[0])+"\t"+str(i[1])+"\t"+str(i[2])+"\t"+str(i[3]))
     text.window_create("end", window=lbl)
     text.insert("end", "\n")
-text.insert("end", "Total:{total}")
-text.insert("end", "Delivery fee:{fee}")
-text.insert("end", ":{fee}")
+text.insert("end", f"\nTotal:{total}")
+text.insert("end", f"\nDelivery fee:{fee}")
+text.insert("end", f"\nTotal Price:{total1}")
             
 welcomeframe.place(x=25,y=25)
 window.mainloop()
+
