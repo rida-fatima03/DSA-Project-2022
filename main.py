@@ -148,15 +148,15 @@ def signin():
     password = pasw.get()
     check_counter=0
     if username == "":
-        warn = "Username can't be empty"
+        warn = "Please enter your username"
     else:
         check_counter += 1
     if password == "":
-        warn = "Password can't be empty"
+        warn = "Please enter your password"
     else:
         check_counter += 1
     if check_counter == 0:
-        warn = "Username and Password can't be empty"
+        warn = "Please enter your username and password "
     if check_counter == 2:
         if (uname == username and password == pwd):
             messagebox.showinfo('Login Status', 'Logged in Successfully!')
@@ -348,31 +348,31 @@ def insert():
     check_counter=0
     warn = ""
     if register_name.get() == "":
-        warn = "Name can't be empty"
+        warn = "Please enter your name"
     else:
         check_counter += 1
         
     if register_email.get() == "":
-        warn = "Email can't be empty"
+        warn = "Please enter your email"
     else:
         check_counter += 1
 
     if register_mobile.get() == "":
-        warn = "Contact can't be empty"
+        warn = "Please enter your contact "
     else:
         check_counter += 1
     if register_address.get() == "":
-        warn = "Address can't be empty"
+        warn = "Please enter your address"
     else:
         check_counter += 1
 
     if variable.get() == "":
-        warn = "Address can't be empty"
+        warn = "Please enter your address"
     else:
         check_counter += 1
 
     if register_pwd.get() == "":
-        warn = "Password can't be empty"
+        warn = "Please enter your password"
     else:
         check_counter += 1
 
