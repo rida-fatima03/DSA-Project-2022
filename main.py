@@ -737,5 +737,5 @@ text.insert("end", f"\nDelivery fee:{fee}")
 text.insert("end", f"\nTotal Price:{total1}")
             
 welcomeframe.place(x=25,y=25)
-wind.mainloop()
+window.mainloop()
 
