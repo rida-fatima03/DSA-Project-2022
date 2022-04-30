@@ -1,0 +1,15 @@
+online bakery ordering interface
+GUI -- Tkinter
+sign up page was storing information in the database
+login page was accessing information from the database
+menu stored in csv file and accessed in the code by using csv module
+bakery is potentially located in Gulistan e Jauhar
+we used binary search and dijkstra to find shortest distance from Gulistan e Jauhar to the area where user lives.
+then the delivery fee was calculated according to the distance computed
+if the order placed was of more than Rs 5000, delivery fee would be waived
+according to the ticking of checkboxes items were placed in bill list
+then bill list would sort by bubble sort from low to high price of items
+then the bill was displayed upon clicking the place order button.
+
+error handling has also been done using different if statements to cater to different kind of scenarios.
+
