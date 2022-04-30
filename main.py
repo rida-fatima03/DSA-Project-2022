@@ -134,18 +134,21 @@ title1.place(x=565,y=100)
 
 
 def signin():
+    username = email.get()
+    password = pasw.get()
     try:
         con = sqlite3.connect('userdata.db')
         c = con.cursor()
         for row in c.execute("Select * from record"):
             uname = row[1]
             pwd = row[5]
+            if uname==username:
+                break
         
     except Exception as ep:
         messagebox.showerror('', ep)
 
-    username = email.get()
-    password = pasw.get()
+    
     check_counter=0
     if username == "":
         warn = "Please enter your username"
@@ -160,12 +163,12 @@ def signin():
     if check_counter == 2:
         if (uname == username and password == pwd):
             messagebox.showinfo('Login Status', 'Logged in Successfully!')
+            menuframe.place(x=25,y=25)
         
         else:
             messagebox.showerror('Login Status', 'invalid username or password')
     else:
         messagebox.showerror('', warn)
-    file.close()
 f = ("Times",14)
 login = Frame(
     loginframe, 
@@ -205,11 +208,11 @@ login_btn = Button(
     font=("Times",14,"bold"), 
     relief=SOLID,
     cursor='hand2',
-    command=lambda:[signin(),menuframe.place(x=25,y=25)],
+    command=lambda:signin(),
     bg = "blue",
     fg="white"
     )
-
+username = email.get()
 Label(login, text="Don't Have an Account?", bg= '#CCCCCC',
     font=f).grid(row=5, column=0, pady=10)
 signup_btn = Button(
@@ -342,7 +345,15 @@ pwd_again = Entry(
     font=f,
     show='*'
 )
-
+import re
+# Make a regular expression
+# for validating an Email
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+def check(email):
+    if(re.fullmatch(regex, email)):
+        return True
+    else:
+        return False
 def insert():
     
     check_counter=0
@@ -355,7 +366,10 @@ def insert():
     if register_email.get() == "":
         warn = "Please enter your email"
     else:
-        check_counter += 1
+        if check(register_email.get()):
+            check_counter += 1
+        else:
+            warn = "Invalid Email Format"
 
     if register_mobile.get() == "":
         warn = "Please enter your contact "
@@ -377,7 +391,7 @@ def insert():
         check_counter += 1
 
     if pwd_again.get() == "":
-        warn = "Re-enter password can't be empty"
+        warn = "Please re-enter password for verification."
     else:
         check_counter += 1
 
@@ -400,6 +414,7 @@ def insert():
             })
             con.commit()
             messagebox.showinfo('Confirmation', 'Record Saved\nClick OK to proceed with your order')
+            menuframe.place(x=25,y=25)
 
         except Exception as ep:
             messagebox.showerror('', ep) 
@@ -412,7 +427,7 @@ register_btn = Button(
     text='Register', 
     font=f, 
     relief=SOLID,
-    cursor='hand2', command = lambda:[insert(),menuframe.place(x=25,y=25)])
+    cursor='hand2', command = lambda:insert())
 register_name.grid(row=0, column=1, pady=10, padx=20)
 register_email.grid(row=1, column=1, pady=10, padx=20) 
 register_mobile.grid(row=2, column=1, pady=10, padx=20)
@@ -472,8 +487,7 @@ for i in menu["CAKES"]:
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    if var.get()>0:
-        i[2]=1
+    i.append(var)
 text['state']='disabled'
 
 br = Image.open('./images/brownie.png')
@@ -495,8 +509,7 @@ for i in menu["BROWNIES"]:
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    if var.get()>0:
-        i[2]=1
+    i.append(var)
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -518,8 +531,7 @@ for i in menu["CUPCAKES"]:
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    if var.get()>0:
-        i[2]=1
+    i.append(var)
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -542,8 +554,7 @@ for i in menu["COOKIES"]:
                               height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    if var.get()>0:
-        i[2]=1
+    i.append(var)
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -566,8 +577,7 @@ for i in menu["SAVOURIES"]:
                               height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    if var.get()>0:
-        i[2]=1
+    i.append(var)
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
 
@@ -590,28 +600,72 @@ for i in menu["BREADS"]:
                               bg='pink', fg='black',height=2,anchor='w',font=("Arial",12),padx=20)
     text.window_create("end", window=checkbutton)
     text.insert("end", "\n\n")
-    if var.get()>0:
-        i[2]=1
+    i.append(var)
 # Make the widget inaccessible to users by preventing them from inserting text into it.
 text['state']='disabled'
+def bubbleSort(array):
+    
+  # loop to access each array element
+  for i in range(len(array)):
+
+    # loop to compare array elements
+    for j in range(0, len(array) - i - 1):
+
+      # compare two adjacent elements
+      # change > to < to sort in descending order
+      if int(array[j][3]) > int(array[j + 1][3]):
+
+        # swapping elements if elements
+        # are not in the intended order
+        temp = array[j]
+        array[j] = array[j+1]
+        array[j+1] = temp
+
+
 bill=[]
 def checkout1():
-    print("inside checkout function")
     for i in menu.keys():
         for j in menu[i]:
-            if int(j[2])>0:
-                temp = [j[0],j[1],j[2],j[1]]
+            if j[3].get()==1:
+                temp = [j[0],j[1],j[3].get(),j[1]]
                 bill.append(temp)
-    
-def x():
-    print("inside checkout function")
+    if len(bill)==0:
+        messagebox.showerror('Order Status','No Items Selected')
+    else:
+        text = ScrolledText(billframe, width=42, height=20)
+        text.place(x=470,y=150)
+        text.insert("end", "\n")
+        text.insert("end", "==========================================\n")
+        num = random.randint(2763718,9485198908)
+        text.insert("end", f"Bill Number:\t{num}\n")
+        text.insert("end", "==========================================\n")
+        text.insert("end", "Item\t\tPrice\tQty\tTotal\n")
+        text.insert("end", "==========================================\n")
+        fee = calcdel()
+        total = 0
+        bubbleSort(bill)
+        for i in bill:
+            total+=int(i[3])
+        if total>5000:
+            fee = 0
+        total1 = fee + total
+        for i in bill:
+            lbl = Label(text, text=str(i[0])+"\t"+"Rs. "+str(i[1])+"\t"+str(i[2])+"\t"+"Rs. "+str(i[3])+"\n",font=("Arial",8))
+            text.window_create("end", window=lbl)
+            text.insert("end", "\n")
+        text.insert("end", "==========================================\n")
+        text.insert("end", f"\nTotal:{total}")
+        text.insert("end", f"\nDelivery fee:{fee}")
+        text.insert("end", f"\nTotal Price:{total1}\n")
+        text.insert("end", "==========================================\n")
+        billframe.place(x=25,y=25)
 
-checkout = Button(menuframe, text="PLACE ORDER", font = ("Arial",12, "bold"),fg="pink",height=2,width=10,bg="red",relief=RIDGE,cursor="hand2",command=lambda: [checkout1(),billframe.place(x=25,y=25)])
+checkout = Button(menuframe, text="PLACE ORDER", font = ("Arial",12, "bold"),fg="pink",height=2,width=12,bg="red",relief=RIDGE,cursor="hand2",command=lambda: checkout1())
 #[checkout(bill),cartframe.place(x=25,y=25)]
 #menuframe.place(x=25,y=25)
 
 title= Label(billframe, text="WE HAVE RECEIVED YOUR ORDER!", fg="black",font=("Times",22,'bold'),bg="lightblue")
-title.place(x=520,y=30) 
+title.place(x=450,y=30) 
 
 
 
@@ -700,12 +754,18 @@ def getShortestPath (graph,initial,final):
     a=path[final]
    
     return a
+username1 = register_email.get()
 def calcdel():
    
         con = sqlite3.connect('userdata.db')
         c = con.cursor()
         for row in c.execute("Select * from record"):
-            are = row[4]
+            uname = row[1]
+            if uname==username or uname==username1:
+                are = row[4]
+                break
+            else:
+                are=row[4]
         dis = getShortestPath (G,"GULISTAN E JAUHAR",are)
         if dis>0 and dis<=10:
             fee = 50
@@ -716,26 +776,6 @@ def calcdel():
         return fee
 
 
-text = ScrolledText(billframe, width=42, height=20)
-text.place(x=470,y=150)
-text.insert("end", "\n")
-num = random.randint(2763718,9485198908)
-text.insert("end", f"Bill Number:{num}\n")
-fee = calcdel()
-total = 0
-for i in bill:
-    total+=int(i[3])
-if total>5000:
-    fee = 0
-total1 = fee + total
-for i in bill:
-    lbl = Label(text, text=str(i[0])+"\t"+str(i[1])+"\t"+str(i[2])+"\t"+str(i[3]))
-    text.window_create("end", window=lbl)
-    text.insert("end", "\n")
-text.insert("end", f"\nTotal:{total}")
-text.insert("end", f"\nDelivery fee:{fee}")
-text.insert("end", f"\nTotal Price:{total1}")
-            
+
 welcomeframe.place(x=25,y=25)
 window.mainloop()
-
